@@ -1,13 +1,59 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { Admin } from "./components/Admin.js";
+import { Posts } from "./components/posts/Posts.js";
+import { Post } from "./components/posts/Post.js";
+import { About } from "./components/About.js";
+import { Contact } from "./components/Contact.js";
+import { SignIn } from "./components/SignIn.js";
+import reportWebVitals from "./reportWebVitals";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AuthProvidor } from "./components/providers/Auth-provider.js";
+import { BlogProvider } from "./components/providers/Blog-provider.js";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "/About",
+        element: <About />,
+      },
+      {
+        path: "/Posts",
+        element: <Posts />,
+      },
+      {
+        path: "/Post/:id",
+        element: <Post />,
+      },
+      {
+        path: "/Admin",
+        element: <Admin />,
+      },
+      {
+        path: "/Contact",
+        element: <Contact />,
+      },
+      {
+        path: "/SignIn",
+        element: <SignIn />,
+      },
+    ],
+  },
+]);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthProvidor>
+      <BlogProvider>
+        <RouterProvider router={router} />
+      </BlogProvider>
+    </AuthProvidor>
   </React.StrictMode>
 );
 
